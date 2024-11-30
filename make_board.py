@@ -21,9 +21,6 @@ bingo_file = '16Star.txt'
 
 
 
-""" Should be in format  """
-bingo_file = None
-
 if len(sys.argv) > 1:
     bingo_file = sys.argv[1]
 
