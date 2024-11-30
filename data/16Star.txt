@@ -1,61 +1,66 @@
-Red Coin Star in WF
-100 Coin Star in WF
-Peachs Slide x 2
-Lose Marios Hat
-5 Castle Secret Stars
-Beat the King in BOB
-One Bowser Stage Red Coin Star
-Collect 120 Coins in one stage
-100 Coin Star in CCM
-Secret Aquarium Star
-15 Lives
-Collect 130 Coins in one stage
-Mario Wings to the Sky BOB
-Red Coin Star in HMC
-All Stars in Whomps
-Collect 140 Coins in one stage
-Red Coin Star in BOB
-2 Cap Stage Stars
-100 Coin Star in LLL
-20 lives
-Red Coin Star in SSL
-100 Coin Star in JRB
-Eye in the Secret Room BBH
-100 Coin Star in SSL
-Open 5 Cannons
-Red Coin Star in JRB
-4 Stars each from SSL and HMC
-100 Coin Star in HMC
-4 Stars each from BOB and CCM
-100 Coin Star in BOB
-100 Coin Star in BBH
-3 Stars each from JRB and BBH
-20 Total Stars
-At least 3 stars from 6 stages
-Collect 140 Coins in two stages
-5 Stars in BOB
-5 Stars in BBH
-5 Stars in SSL
-At least 1 Star from all lobby+basement
-6 Stars in BBH
-3 Stars in DDD
-2 Stars in DDD
-Merry Go Round BBH
-Can the Eel Come Out to Play JRB
-5 Red Coin stars
-Sub 14 PSS
-All 3 Chest Stars
-3 Secrets Stars
-3 100 Coin Stars
-Any 3 Mini-Bosses
-Collect the Caps DDD
-Bowser in the Firesea Reds
-All Slide Stars (Peach 2x, CCM, CCM Race)
-3 Stars Each CCM and SSL
-Wing-cap star
-Metal-cap star
-Top of the volcano LLL
-Mips Star
-Board Bowser Sub
-1 Star from each basement
-4 Red Coin Stars
+Red Coin Star in WF [0]
+100 Coin Star in WF [0]
+Peachs Slide x 2 [1]
+Lose Marios Hat [1]
+5 Castle Secret Stars [1]
+Beat the King in BOB [1]
+One Bowser Stage Red Coin Star [2]
+Collect 120 Coins in three stages [1]
+100 Coin Star in CCM [1]
+Secret Aquarium Star [0]
+15 Lives [1]
+Mario Wings to the Sky BOB [1]
+Red Coin Star in HMC [2]
+All Stars in Whomps [1]
+Collect 140 Coins in two stages [1]
+Red Coin Star in BOB [1]
+2 Cap Stage Stars [3]
+100 Coin Star in LLL [2]
+20 lives [1]
+Red Coin Star in SSL [2]
+100 Coin Star in JRB [1]
+Eye in the Secret Room BBH [2]
+100 Coin Star in SSL [2]
+Open 5 Cannons [1]
+Red Coin Star in JRB [1]
+4 Stars each from SSL and HMC [2]
+100 Coin Star in HMC [3]
+4 Stars each from BOB and CCM [2]
+100 Coin Star in BOB [1]
+100 Coin Star in BBH [1]
+3 Stars each from JRB and BBH [2]
+20 Total Stars [2]
+At least 3 stars from 6 stages [3]
+5 Stars in BOB [2]
+5 Stars in SSL [3]
+At least 1 Star from all lobby+basement [2]
+6 Stars in BBH [2]
+3 Stars in DDD [2.5]
+Merry Go Round BBH [1]
+Can the Eel Come Out to Play JRB [1]
+5 Stage Red Coin Stars [3]
+Sub 14 PSS [1]
+All 3 Chest Stars [1]
+3 100 Coin Stars [1]
+Any 3 Mini-Bosses [1]
+Collect the Caps DDD [3]
+Bowser in the Firesea Reds [3]
+All Slide Stars (Peach 2x, CCM, CCM Race) [2]
+3 Stars Each CCM and SSL [2]
+Wing-cap star [2]
+Metal-cap star [2]
+Vanish-cap star [3]
+Top of the volcano LLL [2]
+Mips Star [1]
+Board Bowser Sub [2]
+1 Star from Each Basement [1]
+All Character Races (Penguin, Koopa) [1]
+Sub 1-Minute Koopa Race [1]
+3 Stars in Boxes [2]
+5 Open-Air Stars [2]
+3 Cannon Stars [1]
+Red Coins in DDD [3]
+Beat Bowser 2 [3]
+4 Stars LLL [2]
+Both Bully Stars LLL [1.5]
+All Caps [3]
