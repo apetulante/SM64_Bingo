@@ -15,7 +15,7 @@ import json
 # Parameters:
 #
 
-iterations = 10000
+iterations = 20_000
 min_threshold = 7
 bingo_file = '16Star.txt'
 
