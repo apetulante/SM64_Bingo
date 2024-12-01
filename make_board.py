@@ -19,16 +19,36 @@ iterations = 20_000
 min_threshold = 7
 bingo_file = '16Star.txt'
 
-
-
 if len(sys.argv) > 1:
     bingo_file = sys.argv[1]
 
+# NOTE(nick): parse args
+args = " ".join(sys.argv[1:]).replace("=", " ").split(" ")
+for i in range(len(args)):
+    key = args[i]
+
+    if key == "-n" or key == "--iterations":
+        try:
+            iterations = int(args[i+1])
+        except ValueError:
+            pass
+
+    if key == "-t" or key == "--threshold":
+        try:
+            min_threshold = int(args[i+1])
+        except ValueError:
+            pass
+
+    if key == "-i" or key == "--input":
+        bingo_file = args[i+1]
+
+
+# NOTE(nick): verify file exists
 if not os.path.exists(bingo_file):
     bingo_file = "data/" + bingo_file
 
 if not os.path.exists(bingo_file):
-    print("Error: file not found")
+    print("Error: file not found:", bingo_file)
     exit(1)
 
 
