@@ -104,30 +104,30 @@ f32 frobenius_norm(double *array, int count)
     return result;
 }
 
-f64 comptue_final_score(f64 *array, int count)
+f64 comptue_final_score(Array_f64 scores)
 {
-    for (int i = 0; i < count; i += 1)
+    for (int i = 0; i < scores.count; i += 1)
     {
-        if (array[i] < min_threshold)
+        if (scores.data[i] < min_threshold)
         {
             return MAX_SCORE;
         }
     }
 
-    f64 mean = compute_mean(array, count);
+    f64 mean = compute_mean(scores.data, scores.count);
 
-    for (int i = 0; i < count; i += 1)
+    for (int i = 0; i < scores.count; i += 1)
     {
-        scores[i] -= mean;
+        scores.data[i] -= mean;
     }
 
-    return frobenius_norm(scores, 12);
+    return frobenius_norm(scores.data, scores.count);
 }
 
 f64 score_board(Goals board)
 {
-    score_board_runs(board);
-    return comptue_final_score(scores, 12);
+    Array_f64 scores = score_board_runs(board);
+    return comptue_final_score(scores);
 }
 
 void print_board_to_json(Goals board)

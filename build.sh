@@ -8,5 +8,5 @@ pushd $project_root
 
     mkdir -p build
     clang -O2 make_board.c -DDEBUG=1 -o build/make_board
-    ~/bin/ntime ./build/make_board data/16Star.txt
+    ~/bin/ntime ./build/make_board data/16Star.txt -n 200000
 popd
