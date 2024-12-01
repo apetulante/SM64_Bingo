@@ -109,9 +109,9 @@ def score_board(board):
 def board_to_json(board):
     result = []
     for i in range(25):
-        # result.append({ 'name': board[i]['name'], 'score': board[i]['score'] })
+        result.append({ 'name': board[i]['name'], 'score': board[i]['score'] })
         # result.append({ 'name': board[i]['name'] })
-        result.append({ 'name': board[i]['name'] + " [" + str(board[i]['score']) + "]" })
+        # result.append({ 'name': board[i]['name'] + " [" + str(board[i]['score']) + "]" })
 
     return json.dumps(result)
 
@@ -163,7 +163,7 @@ print("Best Score:", best_score)
 if best_score == MAX_SCORE:
     print("No solutions found")
     exit(1)
-    
+
 print("Difficulty:", avg)
 
 print("---")
