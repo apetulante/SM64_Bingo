@@ -147,26 +147,6 @@ void print_board_to_json(Goals board)
     print("]");
 }
 
-//
-// @Fixme: we need to seed our built-in random number generator better
-// @See: random_init()
-// :RandomNumberSeeding
-//
-bool fill_random_bytes(void *buf, int len)
-{
-    FILE *f = fopen("/dev/urandom", "rb");
-    if (f != NULL)
-    {
-        size_t read = fread(buf, 1, len, f);
-        fclose(f);
-        if (read == len)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
 int main(int argc, char **argv)
 {
     os_init();
@@ -226,15 +206,10 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    if (seed == 0)
+    if (seed != 0)
     {
-        // :RandomNumberSeeding
-        u8 bytes[8];
-        fill_random_bytes(bytes, 8 * sizeof(u8));
-        seed = *(u64 *)bytes;
+        random_set_seed(seed);
     }
-
-    random_set_seed(seed);
 
     //
     // NOTE(abbie): Rock and roll!
