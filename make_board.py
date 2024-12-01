@@ -18,29 +18,36 @@ import json
 iterations = 20_000
 min_threshold = 7
 bingo_file = '16Star.txt'
+seed = None
 
 if len(sys.argv) > 1:
     bingo_file = sys.argv[1]
 
 # NOTE(nick): parse args
-args = " ".join(sys.argv[1:]).replace("=", " ").split(" ")
+args = " ".join(sys.argv[1:]).replace("=", " ").replace("--", "-").split(" ")
 for i in range(len(args)):
     key = args[i]
 
-    if key == "-n" or key == "--iterations":
+    if key == "-n" or key == "-iterations":
         try:
             iterations = int(args[i+1])
         except ValueError:
             pass
 
-    if key == "-t" or key == "--threshold":
+    if key == "-t" or key == "-threshold":
         try:
             min_threshold = int(args[i+1])
         except ValueError:
             pass
 
-    if key == "-i" or key == "--input":
+    if key == "-i" or key == "-input":
         bingo_file = args[i+1]
+
+    if key == "-s" or key == "-seed":
+        try:
+            seed = int(args[i+1])
+        except ValueError:
+            pass
 
 
 # NOTE(nick): verify file exists
@@ -55,14 +62,14 @@ if not os.path.exists(bingo_file):
 def score_run(nums):
     return np.sum(nums)
 
-def score_runs_final(nums):
+def compute_final_score(nums):
     if np.any(np.less(nums, min_threshold)):
         return 9999999999999999
 
     avg = np.mean(nums)
     return np.linalg.norm(nums - avg)
 
-def score_board(board):
+def score_board_runs(board):
     scores = np.zeros(5+5+2)
     sc = 0
     nums = np.zeros(5)
@@ -93,15 +100,20 @@ def score_board(board):
     scores[sc] = score_run(nums)
     sc += 1
 
-    result = score_runs_final(scores)
+    return scores
+
+
+def score_board(board):
+    scores = score_board_runs(board)
+    result = compute_final_score(scores)
     return result
 
 def board_to_json(board):
     result = []
     for i in range(25):
-        result.append({ 'name': board[i]['name'], 'score': board[i]['score'] })
+        # result.append({ 'name': board[i]['name'], 'score': board[i]['score'] })
         # result.append({ 'name': board[i]['name'] })
-        # result.append({ 'name': board[i]['name'] + " [" + str(board[i]['score']) + "]" })
+        result.append({ 'name': board[i]['name'] + " [" + str(board[i]['score']) + "]" })
 
     return json.dumps(result)
 
@@ -129,6 +141,9 @@ goals = np.array(goals)
 best_list = np.copy(goals)
 best_score = 9999999999999999
 
+if seed is not None:
+    np.random.seed(seed)
+
 i = 0
 while i < iterations:
     np.random.shuffle(goals)
@@ -140,8 +155,13 @@ while i < iterations:
 
     i += 1
 
+# NOTE(nick): output results
+scores = score_board_runs(best_list)
+avg = np.mean(scores)
+
 print("Iterations Run:", iterations)
 print("Best Score:", best_score)
+print("Difficulty:", avg)
 print("---")
 print(board_to_json(best_list))
 print("---")
