@@ -55,7 +55,7 @@ if not os.path.exists(bingo_file):
     print("Error: file not found:", bingo_file)
     exit(1)
 
-MAX_SCORE = 9999999999999999
+MAX_SCORE = 999999999999999
 
 def score_run(nums):
     return np.sum(nums)
@@ -161,7 +161,7 @@ print("Iterations Run:", iterations)
 print("Best Score:", best_score)
 
 if best_score == MAX_SCORE:
-    print("No solutions found")
+    print("No solutions found!")
     exit(1)
 
 print("Difficulty:", avg)
