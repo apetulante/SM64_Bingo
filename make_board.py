@@ -27,27 +27,24 @@ if len(sys.argv) > 1:
 args = " ".join(sys.argv[1:]).replace("=", " ").replace("--", "-").split(" ")
 for i in range(len(args)):
     key = args[i]
-
-    if key == "-n" or key == "-iterations":
-        try:
-            iterations = int(args[i+1])
-        except ValueError:
-            pass
-
-    if key == "-t" or key == "-threshold":
-        try:
-            min_threshold = int(args[i+1])
-        except ValueError:
-            pass
+    int_param = None
+    try:
+        int_param = int(args[i+1])
+    except:
+        pass
 
     if key == "-i" or key == "-input":
         bingo_file = args[i+1]
 
-    if key == "-s" or key == "-seed":
-        try:
-            seed = int(args[i+1])
-        except ValueError:
-            pass
+    if int_param is not None:
+        if key == "-n" or key == "-iterations":
+            iterations = int_param
+
+        if key == "-t" or key == "-threshold":
+            min_threshold = int_param
+
+        if key == "-s" or key == "-seed":
+            seed = int_param
 
 
 # NOTE(nick): verify file exists
@@ -58,13 +55,14 @@ if not os.path.exists(bingo_file):
     print("Error: file not found:", bingo_file)
     exit(1)
 
+MAX_SCORE = 9999999999999999
 
 def score_run(nums):
     return np.sum(nums)
 
 def compute_final_score(nums):
     if np.any(np.less(nums, min_threshold)):
-        return 9999999999999999
+        return MAX_SCORE
 
     avg = np.mean(nums)
     return np.linalg.norm(nums - avg)
@@ -139,7 +137,7 @@ for i in range(len(lines)):
 goals = np.array(goals)
 
 best_list = np.copy(goals)
-best_score = 9999999999999999
+best_score = MAX_SCORE
 
 if seed is not None:
     np.random.seed(seed)
@@ -149,7 +147,7 @@ while i < iterations:
     np.random.shuffle(goals)
 
     score = score_board(goals)
-    if (score < best_score) and score < 9999999999999999:
+    if score < best_score:
         best_score = score
         best_list = np.copy(goals)
 
@@ -161,7 +159,13 @@ avg = np.mean(scores)
 
 print("Iterations Run:", iterations)
 print("Best Score:", best_score)
+
+if best_score == MAX_SCORE:
+    print("No solutions found")
+    exit(1)
+    
 print("Difficulty:", avg)
+
 print("---")
 print(board_to_json(best_list))
 print("---")
