@@ -147,6 +147,16 @@ void print_board_to_json(Goals board)
     print("]");
 }
 
+void print_success()
+{
+    print(" _       __    _                   __                    _ __                       _       __");
+    print("| |     / /__ ( )   _____     ____/ /___  ____  ___     (_) /_   ____ _____ _____ _(_)___  / /");
+    print("| | /| / / _ \|/ | / / _ \   / __  / __ \/ __ \/ _ \   / / __/  / __ `/ __ `/ __ `/ / __ \/ / ");
+    print("| |/ |/ /  __/ | |/ /  __/  / /_/ / /_/ / / / /  __/  / / /_   / /_/ / /_/ / /_/ / / / / /_/  ");
+    print("|__/|__/\___/  |___/\___/   \__,_/\____/_/ /_/\___/  /_/\__/   \__,_/\__, /\__,_/_/_/ /_(_)   ");
+    print("                                                                    /____/                    ");
+}
+
 int main(int argc, char **argv)
 {
     os_init();
@@ -272,6 +282,9 @@ int main(int argc, char **argv)
             break;
         }
     }
+
+    // NOTE(we've done it again): we've done it again
+    print_success()
 
     // NOTE(nick): output results
     print("Iterations Run: %d\n", count);
