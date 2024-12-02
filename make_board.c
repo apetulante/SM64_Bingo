@@ -284,7 +284,7 @@ int main(int argc, char **argv)
     }
 
     // NOTE(we've done it again): we've done it again
-    print_success()
+    print_success();
 
     // NOTE(nick): output results
     print("Iterations Run: %d\n", count);
