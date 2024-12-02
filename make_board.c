@@ -138,9 +138,9 @@ void print_board_to_json(Goals board)
         String name = string_replace(temp_arena(), board.data[i].name, S("\""), S("\\\""), 0);
         f32 score = board.data[i].score;
 
-        // print("{ \"name\": \"%.*s\", \"score\": %.1f }", LIT(name), score);
+        print("{ \"name\": \"%.*s\", \"score\": %.1f }", LIT(name), score);
         // print("{ \"name\": \"%.*s\" }", LIT(name));
-        print("{ \"name\": \"%.*s [%.1f]\" }", LIT(name), score);
+        // print("{ \"name\": \"%.*s [%.1f]\" }", LIT(name), score);
 
         if (i < 25-1) { print(", "); }
     }
