@@ -138,9 +138,9 @@ void print_board_to_json(Goals board)
         String name = string_replace(temp_arena(), board.data[i].name, S("\""), S("\\\""), 0);
         f32 score = board.data[i].score;
 
-        print("{ \"name\": \"%.*s\", \"score\": %.1f }", LIT(name), score);
+        // print("{ \"name\": \"%.*s\", \"score\": %.1f }", LIT(name), score);
         // print("{ \"name\": \"%.*s\" }", LIT(name));
-        // print("{ \"name\": \"%.*s [%.1f]\" }", LIT(name), score);
+        print("{ \"name\": \"%.*s [%.1f]\" }", LIT(name), score);
 
         if (i < 25-1) { print(", "); }
     }
@@ -252,6 +252,8 @@ int main(int argc, char **argv)
 
     f64 best_score = MAX_SCORE;
 
+    f32 score_threshold = 0.5;
+    int count = 0;
     for (int i = 0; i < iterations; i += 1)
     {
         random_shuffle(goals.data, goals.count, sizeof(Entry));
@@ -262,10 +264,17 @@ int main(int argc, char **argv)
             best_score = score;
             MemoryCopy(best_list.data, goals.data, sizeof(Entry)*goals.count);
         }
+
+        count += 1;
+
+        if (score <= score_threshold)
+        {
+            break;
+        }
     }
 
     // NOTE(nick): output results
-    print("Iterations Run: %d\n", iterations);
+    print("Iterations Run: %d\n", count);
     print("Best Score: %.2f\n", best_score);
 
     if (best_score == MAX_SCORE)
@@ -275,6 +284,13 @@ int main(int argc, char **argv)
     }
 
     Array_f64 scores = score_board_runs(best_list);
+    print("Sums: ");
+    for (int i = 0; i < scores.count; i += 1)
+    {
+        print("%.1f", scores.data[i]);
+        if (i < scores.count-1) print(", ");
+    }
+    print("\n");
     f64 mean = compute_mean(scores.data, scores.count);
     print("Difficulty: %.2f\n", mean);
 
