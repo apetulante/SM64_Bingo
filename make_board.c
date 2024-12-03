@@ -299,6 +299,16 @@ int main(int argc, char **argv)
         if (i < scores.count-1) print(", ");
     }
     print("\n");
+
+    f32 min = F32_MAX;
+    f32 max = 0.0;
+    for (int i = 0; i < scores.count; i += 1)
+    {
+        min = fminf(min, scores.data[i]);
+        max = fmaxf(max, scores.data[i]);
+    }
+    print("Spread: %.1f (min: %.1f, max: %.1f)\n", max - min, min, max);
+
     f64 mean = compute_mean(scores.data, scores.count);
     print("Difficulty: %.2f\n", mean);
 

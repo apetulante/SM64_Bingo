@@ -165,6 +165,9 @@ if best_score == MAX_SCORE:
     exit(1)
 
 print("Difficulty:", avg)
+minx = np.min(scores)
+maxx = np.max(scores)
+print("Spread:", maxx-minx, "(min: " + str(minx) + ", max: " + str(maxx) + ")")
 
 print("---")
 print(board_to_json(best_list))
