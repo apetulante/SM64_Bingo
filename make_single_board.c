@@ -216,13 +216,35 @@ void print_board_details(float grid[5][5]) {
         anti_diag_sum += grid[i][4-i];
     }
 
-    printf("\nHardest Sum: %f\n", fmaxf(row_sums[0], row_sums[1]));
-    printf("Easiest Sum: %f\n", fminf(row_sums[0], row_sums[1]));
+    // Get min/max sums for printing
+    float min_sum = INFINITY;
+    float max_sum = -INFINITY;
+
+    // Check row sums
+    for (int i = 0; i < 5; i++) {
+        min_sum = fminf(min_sum, row_sums[i]);
+        max_sum = fmaxf(max_sum, row_sums[i]);
+    }
+
+    // Check column sums
+    for (int j = 0; j < 5; j++) {
+        min_sum = fminf(min_sum, col_sums[j]);
+        max_sum = fmaxf(max_sum, col_sums[j]);
+    }
+
+    // Check diagonal sums
+    min_sum = fminf(min_sum, main_diag_sum);
+    max_sum = fmaxf(max_sum, main_diag_sum);
+    min_sum = fminf(min_sum, anti_diag_sum);
+    max_sum = fmaxf(max_sum, anti_diag_sum);
+
+    printf("\nHardest Sum: %.1f\n", max_sum);
+    printf("Easiest Sum: %.1f\n", min_sum);
 
     printf("\nFinal GRID:\n");
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
-            printf("%f ", grid[i][j]);
+            printf("%.2f ", grid[i][j]);
         }
         printf("\n");
     }
