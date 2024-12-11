@@ -1,0 +1,182 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add the Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Grandstander&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sigmar&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Bingo Board Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-image: url('./static/images/marioBackground.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Grandstander', sans-serif;
+            font-size: 20px;
+        }
+        .rainbow-title {
+            font-family: 'Sigmar';
+            font-size: 4.5rem;
+            background: linear-gradient(to right, 
+                #ff0000, #ff7f00, #eeee08, #00ff00, 
+                #0000ff, #4b0082, #8f00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            /* This creates a more solid outline effect using multiple shadows */
+            filter: drop-shadow(2px 2px 0 black)
+               drop-shadow(-2px -2px 0 black)
+               drop-shadow(-2px 2px 0 black)
+               drop-shadow(2px -2px 0 black);
+            font-size: 35px;
+            letter-spacing: 3px;
+            text-align: center;
+            width: 100%;
+            display: block;
+        }
+                /* Custom background for the main container */
+                .mario-container {
+            background-color: #EDC97A;
+            background-size: cover;
+            background-position: center;
+            border: 4px solid #333;  /* SM64-style border */
+        }
+
+        /* Custom font for labels */
+        .mario-text {
+            font-family: 'Bubblegum Sans', cursive;
+            color: #FFD700;  /* golden yellow */
+            text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Custom styling for inputs */
+        .mario-input {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 2px solid #4a5568;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto p-8 rounded-lg shadow-md mario-container">
+        <h1 class="mb-6 rainbow-title">BINGO BOARD GENERATOR</h1>
+        
+        <form id="bingo-form" class="space-y-4">
+            <div>
+                <label class="block mb-2">Input File:</label>
+                <select name="input_file" class="w-full p-2 border rounded">
+                    {% for file in txt_files %}
+                    <option value="{{ file }}">{{ file }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-2">Iterations:</label>
+                    <input type="number" name="iterations" value="1000000000" 
+                           class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label class="block mb-2">Tolerance:</label>
+                    <input type="number" step="0.1" name="tolerance" value="1.0" 
+                           class="w-full p-2 border rounded">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-2">Seed (optional):</label>
+                    <input type="number" name="seed" value="0" 
+                           class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label class="block mb-2">Min Difficulty:</label>
+                    <input type="number" step="0.1" name="min_difficulty" value="8.0" 
+                           class="w-full p-2 border rounded">
+                </div>
+            </div>
+
+            <button type="submit" 
+                    class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition">
+                Generate Bingo Board
+            </button>
+        </form>
+
+        <div id="result-container" class="mt-6 hidden">
+            <!-- Stats and copy button in a flex row -->
+            <div class="flex justify-between items-center mb-4">
+                <div class="text-gray-700">
+                    <p class="font-bold mb-2">We've done it again!</p>
+                    <p id="hardest-row"></p>
+                    <p id="easiest-row"></p>
+                </div>
+                <button id="copy-btn" 
+                        class="bg-green-500 text-white p-2 rounded hover:bg-green-600 transition ml-4">
+                    Copy JSON to Clipboard
+                </button>
+            </div>
+        
+            <!-- JSON output below -->
+            <div class="bg-gray-100 p-4 rounded">
+                <pre id="json-output" class="overflow-auto max-h-60"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('bingo-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(e.target);
+
+            // Show loading state
+            const resultContainer = document.getElementById('result-container');
+            const jsonOutput = document.getElementById('json-output');
+            const hardestRow = document.getElementById('hardest-row');
+            const easiestRow = document.getElementById('easiest-row');
+            
+            resultContainer.classList.remove('hidden');
+            jsonOutput.textContent = 'Generating...';
+            hardestRow.textContent = '';
+            easiestRow.textContent = '';
+
+            // Send request
+            fetch('/generate', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display hardest and easiest row sums
+                hardestRow.textContent = data.hardest_row;
+                easiestRow.textContent = data.easiest_row;
+
+                // Display JSON
+                jsonOutput.textContent = JSON.stringify(data.board_json, null, 2);
+            })
+            .catch(error => {
+                jsonOutput.textContent = 'Error: ' + error;
+            });
+        });
+
+        // Copy to clipboard functionality
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const jsonOutput = document.getElementById('json-output');
+            navigator.clipboard.writeText(jsonOutput.textContent)
+                .then(() => {
+                    alert('JSON copied to clipboard!');
+                })
+                .catch(err => {
+                    console.error('Could not copy text: ', err);
+                });
+        });
+    </script>
+</body>
+</html>
