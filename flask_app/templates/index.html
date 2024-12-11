@@ -20,6 +20,13 @@
             font-family: 'Grandstander', sans-serif;
             font-size: 20px;
         }
+        *, *:hover, input, select, button, textarea, label {
+            cursor: url('/static/imagescursor.cur'), auto !important;
+        }
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button {
+            cursor: url('/static/images/cursor.cur'), auto !important;
+        }
         .rainbow-title {
             font-family: 'Sigmar';
             font-size: 4.5rem;
