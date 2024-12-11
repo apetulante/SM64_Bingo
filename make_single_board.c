@@ -216,8 +216,8 @@ void print_board_details(float grid[5][5]) {
         anti_diag_sum += grid[i][4-i];
     }
 
-    printf("\nHardest Difficulty Row Sum: %f\n", fmaxf(row_sums[0], row_sums[1]));
-    printf("Easiest Difficulty Row Sum: %f\n", fminf(row_sums[0], row_sums[1]));
+    printf("\nHardest Sum: %f\n", fmaxf(row_sums[0], row_sums[1]));
+    printf("Easiest Sum: %f\n", fminf(row_sums[0], row_sums[1]));
 
     printf("\nFinal GRID:\n");
     for (int i = 0; i < 5; i++) {

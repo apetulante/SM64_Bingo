@@ -112,12 +112,12 @@
             <!-- Stats and copy button in a flex row -->
             <div class="flex justify-between items-center mb-4">
                 <div class="text-gray-700">
-                    <p class="font-bold mb-2">We've done it again!</p>
+                    <p id="wdia"  class="font-bold mb-2 hidden">We've done it again!</p>
                     <p id="hardest-row"></p>
                     <p id="easiest-row"></p>
                 </div>
                 <button id="copy-btn" 
-                        class="bg-green-500 text-white p-2 rounded hover:bg-green-600 transition ml-4">
+                        class="bg-green-500 text-white p-2 rounded hover:bg-green-600 transition ml-4 hidden">
                     Copy JSON to Clipboard
                 </button>
             </div>
@@ -157,6 +157,8 @@
                 // Display hardest and easiest row sums
                 hardestRow.textContent = data.hardest_row;
                 easiestRow.textContent = data.easiest_row;
+                document.getElementById("wdia").classList.remove('hidden');
+                document.getElementById("copy-btn").classList.remove('hidden');
 
                 // Display JSON
                 jsonOutput.textContent = JSON.stringify(data.board_json, null, 2);
