@@ -21,11 +21,11 @@
             font-size: 20px;
         }
         *, *:hover, input, select, button, textarea, label {
-            cursor: url('/static/imagescursor.cur'), auto !important;
+            cursor: url('./static/images/cursor.cur'), auto !important;
         }
         input[type="number"]::-webkit-inner-spin-button, 
         input[type="number"]::-webkit-outer-spin-button {
-            cursor: url('/static/images/cursor.cur'), auto !important;
+            cursor: url('./static/images/cursor.cur'), auto !important;
         }
         .rainbow-title {
             font-family: 'Sigmar';
@@ -136,8 +136,13 @@
         </div>
     </div>
 
+    <audio id="clickSound" src="./static/generateButton.wav"></audio>
+
     <script>
+        const clickSound = document.getElementById('clickSound');
+
         document.getElementById('bingo-form').addEventListener('submit', function(e) {
+            clickSound.play();
             e.preventDefault();
             
             // Get form data
@@ -148,6 +153,8 @@
             const jsonOutput = document.getElementById('json-output');
             const hardestRow = document.getElementById('hardest-row');
             const easiestRow = document.getElementById('easiest-row');
+            document.getElementById("wdia").classList.add('hidden');
+            document.getElementById("copy-btn").classList.add('hidden');
             
             resultContainer.classList.remove('hidden');
             jsonOutput.textContent = 'Generating...';

@@ -122,11 +122,28 @@ bool is_magic_square_with_tolerance(float grid[5][5], float tolerance, float min
     min_sum = fminf(min_sum, main_diag_sum);
     min_sum = fminf(min_sum, anti_diag_sum);
 
+    // Check 1: min must be greater than minvVal
     if (min_sum < minVal) {
         return false;
     }
 
-    return (max_sum - min_sum) <= tolerance;
+    // Check 2: max - min must be below tolerance
+    if ((max_sum - min_sum) > tolerance) {
+        return false;
+    }
+
+    // Check 3: At least 2 rows/cols must be equal to min
+    int count_at_min = 0;
+    float epsilon = 1e-6f;
+    for (int i = 0; i < 5; i++) {
+        if (fabsf(row_sums[i] - min_sum) <= epsilon) count_at_min++;
+        if (fabsf(col_sums[i] - min_sum) <= epsilon) count_at_min++;
+    }
+    if (fabsf(main_diag_sum - min_sum) <= epsilon) count_at_min++;
+    if (fabsf(anti_diag_sum - min_sum) <= epsilon) count_at_min++;
+
+    // Return false if we don't have enough sums at the minimum
+    return count_at_min >= 2;
 }
 
 // Generate bingo board
