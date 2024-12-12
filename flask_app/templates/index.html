@@ -27,6 +27,7 @@
         input[type="number"]::-webkit-outer-spin-button {
             cursor: url('./static/images/cursor.cur'), auto !important;
         }
+
         .rainbow-title {
             font-family: 'Sigmar';
             font-size: 4.5rem;
@@ -47,8 +48,9 @@
             width: 100%;
             display: block;
         }
-                /* Custom background for the main container */
-                .mario-container {
+
+        /* Custom background for the main container */
+        .mario-container {
             background-color: #EDC97A;
             background-size: cover;
             background-position: center;
@@ -67,6 +69,14 @@
             background-color: rgba(255, 255, 255, 0.9);
             border: 2px solid #4a5568;
         }
+
+        #copy-btn {
+            width: 250px;
+            height: 50px;
+            text-align: center;
+        }
+
+
     </style>
 </head>
 <body class="bg-gray-100 p-8">
@@ -185,9 +195,19 @@
         // Copy to clipboard functionality
         document.getElementById('copy-btn').addEventListener('click', function() {
             const jsonOutput = document.getElementById('json-output');
+            const copyBtn = document.getElementById('copy-btn');
+
             navigator.clipboard.writeText(jsonOutput.textContent)
                 .then(() => {
-                    alert('JSON copied to clipboard!');
+                    // Save the original button text
+                    const originalText = copyBtn.textContent;
+
+                    // Change the button text to "Copied!"
+                    copyBtn.textContent = 'Copied!';
+                    // Restore the original text after 2 seconds
+                    setTimeout(() => {
+                        copyBtn.textContent = originalText;
+                    }, 2000);
                 })
                 .catch(err => {
                     console.error('Could not copy text: ', err);
