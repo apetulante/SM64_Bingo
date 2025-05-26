@@ -79,7 +79,10 @@
             text-align: center;
         }
 
-
+        /* Hide the file input */
+        #file-input {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-gray-100 p-8">
@@ -87,13 +90,24 @@
         <h1 class="mb-6 rainbow-title">BINGO BOARD GENERATOR</h1>
         
         <form id="bingo-form" class="space-y-4">
-            <div>
+            <!-- <div>
                 <label class="block mb-2">Input File:</label>
                 <select name="input_file" class="w-full p-2 border rounded">
                     {% for file in txt_files %}
                     <option value="{{ file }}">{{ file }}</option>
                     {% endfor %}
                 </select>
+            </div> -->
+            <div>
+                <label class="block mb-2">Input File:</label>
+                <select id="input-file-select" name="input_file" class="w-full p-2 border rounded">
+                    {% for file in txt_files %}
+                    <option value="{{ file }}">{{ file }}</option>
+                    {% endfor %}
+                    <option value="upload">📁 Upload your own file...</option>
+                </select>
+                <!-- Hidden file input -->
+                <input type="file" id="file-input" accept=".txt" />
             </div>
 
             <div class="grid grid-cols-2 gap-4">
@@ -153,6 +167,63 @@
 
     <script>
         const clickSound = document.getElementById('clickSound');
+
+        const inputFileSelect = document.getElementById('input-file-select');
+        const fileInput = document.getElementById('file-input');
+
+        // Handle dropdown change
+        inputFileSelect.addEventListener('change', function() {
+            if (this.value === 'upload') {
+                fileInput.click();
+            }
+        });
+
+        // Handle file selection
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file && file.name.endsWith('.txt')) {
+                // Upload the file
+                const formData = new FormData();
+                formData.append('custom_file', file);
+
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Add the new file to the dropdown and select it
+                        const newOption = document.createElement('option');
+                        newOption.value = file.name;
+                        newOption.textContent = file.name;
+
+                        // Insert before the "Upload your own file..." option
+                        const uploadOption = inputFileSelect.querySelector('option[value="upload"]');
+                        inputFileSelect.insertBefore(newOption, uploadOption);
+
+                        // Select the newly uploaded file
+                        inputFileSelect.value = file.name;
+                    } else {
+                        alert('Failed to upload file');
+                        // Reset dropdown to first option
+                        inputFileSelect.selectedIndex = 0;
+                    }
+                })
+                .catch(error => {
+                    console.error('Upload error:', error);
+                    alert('Failed to upload file');
+                    // Reset dropdown to first option
+                    inputFileSelect.selectedIndex = 0;
+                });
+            } else {
+                alert('Please select a .txt file');
+                // Reset dropdown to first option
+                inputFileSelect.selectedIndex = 0;
+            }
+
+            // Clear the file input
+            this.value = '';
+        });
 
         document.getElementById('bingo-form').addEventListener('submit', function(e) {
             clickSound.play();

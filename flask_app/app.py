@@ -4,6 +4,8 @@ import subprocess
 import json
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
+from flask import send_from_directory, redirect
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 CORS(app)
@@ -76,6 +78,21 @@ def generate_board():
         return jsonify({'error': 'Generation timed out'}), 500
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    if 'custom_file' not in request.files:
+        return redirect('/')
+
+    file = request.files['custom_file']
+    if file.filename == '':
+        return redirect('/')
+
+    if file and file.filename.endswith('.txt'):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(DATA_DIR, filename))
+
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)
