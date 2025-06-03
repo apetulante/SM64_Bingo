@@ -8,4 +8,4 @@ Includes .txt files with potential bingo tiles.
 
 --------------------------------------
 
-Want to use our boards? Go to http://sm64bingo.pythonanywhere.com/
+Want to use our boards? Go to https://sm64bingo.pythonanywhere.com/
